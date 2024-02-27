@@ -1,0 +1,15 @@
+[package]
+name = "patient_records"
+version = "0.0.1"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+name = "patient_records"
+
+[dependencies]
+hdk = { workspace = true }
+
+serde = { workspace = true }
+
+patient_records_integrity = { workspace = true } 

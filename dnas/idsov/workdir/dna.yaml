@@ -1,0 +1,21 @@
+---
+manifest_version: "1"
+name: idsov
+integrity:
+  network_seed: ~
+  properties: ~
+  origin_time: 1709024187732655
+  zomes:
+    - name: patient_records_integrity
+      hash: ~
+      bundled: "../../../target/wasm32-unknown-unknown/release/patient_records_integrity.wasm"
+      dependencies: ~
+      dylib: ~
+coordinator:
+  zomes:
+    - name: patient_records
+      hash: ~
+      bundled: "../../../target/wasm32-unknown-unknown/release/patient_records.wasm"
+      dependencies:
+        - name: patient_records_integrity
+      dylib: ~

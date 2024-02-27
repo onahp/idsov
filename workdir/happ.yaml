@@ -1,0 +1,18 @@
+---
+manifest_version: "1"
+name: idsov
+description: ~
+roles:
+  - name: idsov
+    provisioning:
+      strategy: create
+      deferred: false
+    dna:
+      bundled: "../dnas/idsov/workdir/idsov.dna"
+      modifiers:
+        network_seed: ~
+        properties: ~
+        origin_time: ~
+        quantum_time: ~
+      installed_hash: ~
+      clone_limit: 0
