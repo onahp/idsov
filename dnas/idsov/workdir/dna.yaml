@@ -11,6 +11,11 @@ integrity:
       bundled: "../../../target/wasm32-unknown-unknown/release/patient_records_integrity.wasm"
       dependencies: ~
       dylib: ~
+    - name: profiles_integrity
+      hash: ~
+      bundled: "../../../target/wasm32-unknown-unknown/release/profiles_integrity.wasm"
+      dependencies: ~
+      dylib: ~
 coordinator:
   zomes:
     - name: patient_records
@@ -18,4 +23,10 @@ coordinator:
       bundled: "../../../target/wasm32-unknown-unknown/release/patient_records.wasm"
       dependencies:
         - name: patient_records_integrity
+      dylib: ~
+    - name: profiles
+      hash: ~
+      bundled: "../../../target/wasm32-unknown-unknown/release/profiles.wasm"
+      dependencies:
+        - name: profiles_integrity
       dylib: ~

@@ -17,3 +17,9 @@ path = "dnas/idsov/zomes/coordinator/patient_records"
 
 [workspace.dependencies.patient_records_integrity]
 path = "dnas/idsov/zomes/integrity/patient_records"
+
+[workspace.dependencies.profiles]
+path = "dnas/idsov/zomes/coordinator/profiles"
+
+[workspace.dependencies.profiles_integrity]
+path = "dnas/idsov/zomes/integrity/profiles"
