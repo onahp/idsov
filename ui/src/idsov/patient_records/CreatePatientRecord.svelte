@@ -53,7 +53,7 @@ async function createPatientRecord() {
 <mwc-snackbar bind:this={errorSnackbar} leading>
 </mwc-snackbar>
 <div style="display: flex; flex-direction: column">
-  <span style="font-size: 18px">Create PatientRecord</span>
+  <span style="font-size: 18px">Create Patient Record</span>
   
 
   <div style="margin-bottom: 16px">
@@ -71,7 +71,7 @@ async function createPatientRecord() {
 
   <mwc-button 
     raised
-    label="Create PatientRecord"
+    label="Create Patient Record"
     disabled={!isPatientRecordValid}
     on:click={() => createPatientRecord()}
   ></mwc-button>

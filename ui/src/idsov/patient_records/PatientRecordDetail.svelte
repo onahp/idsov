@@ -10,21 +10,19 @@ import type { Snackbar } from '@material/mwc-snackbar';
 import '@material/mwc-snackbar';
 import '@material/mwc-icon-button';
 import EditPatientRecord from './EditPatientRecord.svelte'; 
+import CreateComment from './CreateComment.svelte';
+import CommentsForPatientRecord from './CommentsForPatientRecord.svelte';
 
 const dispatch = createEventDispatcher();
 
 export let patientRecordHash: ActionHash;
 
 let client: AppAgentClient = (getContext(clientContext) as any).getClient();
-
 let loading = true;
 let error: any = undefined;
-
 let record: Record | undefined;
 let patientRecord: PatientRecord | undefined;
-
 let editing = false;
-
 let errorSnackbar: Snackbar;
   
 $: editing,  error, loading, record, patientRecord;
@@ -120,6 +118,8 @@ async function deletePatientRecord() {
     <span style="white-space: pre-line">{ new Date(patientRecord.date_visited / 1000).toLocaleString() }</span>
   </div>
 
+  <CreateComment patientRecordHash="{patientRecordHash}"></CreateComment>
+  <CommentsForPatientRecord patientRecordHash="{patientRecordHash}"></CommentsForPatientRecord>
 </div>
 {/if}
 
