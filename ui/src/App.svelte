@@ -86,6 +86,12 @@
       <CreatePatientRecord></CreatePatientRecord>
       <AllRecords></AllRecords>
     </div>
+    <footer style="margin: 10px;">
+      <small>
+        <img class="holochain-logo" src={Holochain} alt="holochain logo"/>
+        Private Holochain network: {dna}
+      </small>
+    </footer>
   </main>
 {/if}
 
