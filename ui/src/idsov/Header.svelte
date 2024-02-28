@@ -1,5 +1,5 @@
 <script lang="ts">
-    import Logo from "../assets/logo.png";
+    import Logo from "../assets/idsov.png";
     import FaPlusCircle from "svelte-icons/fa/FaPlusCircle.svelte";
     import FaBell from "svelte-icons/fa/FaBell.svelte";
     import FaBullhorn from "svelte-icons/fa/FaBullhorn.svelte";
