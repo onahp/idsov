@@ -1,5 +1,5 @@
 <script lang="ts">
-    import Logo from "../../assets/logo.png";
+    import Logo from "../assets/logo.png";
     import FaPlusCircle from "svelte-icons/fa/FaPlusCircle.svelte";
     import FaBell from "svelte-icons/fa/FaBell.svelte";
     import FaBullhorn from "svelte-icons/fa/FaBullhorn.svelte";
@@ -49,7 +49,7 @@
 
 <header>
     <nav class="navbar">
-        <div class="container-fluid converge-header">
+        <div class="container-fluid idsov-header">
             <div>
                 <a
                     id="logo"
@@ -118,7 +118,7 @@
                             </div>
                             <!-- <i class="fas fa-plus white-circle-plus"></i> -->
                             <!-- <img class="nav-image" src="/assets/add_circle_black_24dp-b42cee553b2665d6f62bd5d9ffc02837cf3c5a3084fc6a5674f5edf83776f565.svg" alt="Add circle black 24dp" border="0"> -->
-                            <span id="new-action">New deliberation</span>
+                            <span id="new-action">New Patient Record</span>
                         </div>
                     </li>
 

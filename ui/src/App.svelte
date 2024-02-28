@@ -14,6 +14,9 @@
 
   // files
   import Holochain from "./assets/holochain.png";
+  
+  // header file import
+  import Header from './idsov/Header.svelte';
 
   // initialized 
   let client: AppAgentClient | undefined;
@@ -82,6 +85,7 @@
   </div>
 {:else}
   <main class="idsov-container">
+    <Header />
     <div id="content" style="display: flex; flex-direction: column; flex: 1;">
       <CreatePatientRecord></CreatePatientRecord>
       <AllRecords></AllRecords>

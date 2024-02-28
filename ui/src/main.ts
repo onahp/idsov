@@ -9,6 +9,9 @@
 
 // keep standard
 import './app.css';
+
+// import custom config
+import './can.css';
 import App from './App.svelte';
 
 const app = new App({
