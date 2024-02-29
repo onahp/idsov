@@ -20,6 +20,7 @@ pub fn create_patient_record(patient_record: PatientRecord) -> ExternResult<Reco
     )?;
     Ok(record)
 }
+
 #[hdk_extern]
 pub fn get_latest_patient_record(
     original_patient_record_hash: ActionHash,
@@ -47,6 +48,7 @@ pub fn get_latest_patient_record(
     };
     get(latest_patient_record_hash, GetOptions::default())
 }
+
 #[hdk_extern]
 pub fn get_original_patient_record(
     original_patient_record_hash: ActionHash,

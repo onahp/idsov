@@ -3,7 +3,7 @@ import { onMount, getContext } from 'svelte';
 import '@material/mwc-circular-progress';
 import type { EntryHash, Record, AgentPubKey, ActionHash, AppAgentClient, NewEntryAction } from '@holochain/client';
 import { clientContext } from '../../contexts';
-import PatientRecordDetail from './PatientRecordDetail.svelte';
+import PatientRecordListItem from './PatientRecordListItem.svelte';
 import type { PatientRecordsSignal } from './types';
 
 
@@ -57,7 +57,7 @@ async function fetchPatientRecords() {
 <div style="display: flex; flex-direction: column">
   {#each hashes as hash}
     <div style="margin-bottom: 8px;">
-      <PatientRecordDetail patientRecordHash={hash}  on:patient-record-deleted={() => fetchPatientRecords()}></PatientRecordDetail>
+      <PatientRecordListItem patientRecordHash={hash}  on:patient-record-deleted={() => fetchPatientRecords()}></PatientRecordListItem>
     </div>
   {/each}
 </div>

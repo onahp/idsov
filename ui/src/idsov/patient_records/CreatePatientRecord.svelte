@@ -52,10 +52,16 @@ async function createPatientRecord() {
 </script>
 <mwc-snackbar bind:this={errorSnackbar} leading>
 </mwc-snackbar>
-<div style="display: flex; flex-direction: column">
+<div class="dashboard-section">
+  <div class="dashboard-item">
+    <div>
+      <mwc-textarea outlined label="Content" value={ content } on:input={e => { content = e.target.value;} } required></mwc-textarea>
+    </div>
+  </div>
+</div>
+<!-- <div class="dashboard-item" style="display: flex; flex-direction: column">
   <span style="font-size: 18px">Create Patient Record</span>
   
-
   <div style="margin-bottom: 16px">
     <mwc-textarea outlined label="Content" value={ content } on:input={e => { content = e.target.value;} } required></mwc-textarea>          
   </div>
@@ -75,4 +81,4 @@ async function createPatientRecord() {
     disabled={!isPatientRecordValid}
     on:click={() => createPatientRecord()}
   ></mwc-button>
-</div>
+</div> -->

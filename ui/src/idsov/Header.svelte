@@ -5,7 +5,7 @@
     import FaBullhorn from "svelte-icons/fa/FaBullhorn.svelte";
     import FaList from "svelte-icons/fa/FaList.svelte";
     import FaHome from "svelte-icons/fa/FaHome.svelte";
-    import { navigate, view } from "../store.js";
+    import { navigate, view } from "../store";
     import { clientContext } from "../contexts";
     import type {
         EntryHash,
@@ -30,21 +30,21 @@
         currentView = value;
     });
 
-    async function goToCreate() {
-        navigate("create-coordination", {});
-    }
+    // async function goToCreate() {
+    //     navigate("create-coordination", {});
+    // }
 
-    async function goToNotifications() {
-        navigate("notifications", {});
-    }
+    // async function goToNotifications() {
+    //     navigate("notifications", {});
+    // }
 
     async function goToDashboard() {
         navigate("dashboard", {});
     }
 
-    async function goToBulletin() {
-        navigate("all-coordinations", {});
-    }
+    // async function goToBulletin() {
+    //     navigate("all-coordinations", {});
+    // }
 </script>
 
 <header>
@@ -63,7 +63,7 @@
                 <!-- {#if initialized} -->
 
                 <ul class="nav navbar-nav float-right">
-                    <li class="bulletin" on:click={goToBulletin}>
+                    <!-- <li class="bulletin" on:click={goToBulletin}>
                         {#if currentView == "all-coordinations"}
                             <div class="bulletin-icon" style="color:#1952bb">
                                 <FaBullhorn />
@@ -73,7 +73,7 @@
                                 <FaBullhorn />
                             </div>
                         {/if}
-                    </li>
+                    </li> -->
 
                     <li class="dashboard" on:click={goToDashboard}>
                         {#if currentView == "dashboard"}
@@ -110,7 +110,7 @@
                         <div
                             class="new-action-button"
                             on:click={() => {
-                                navigate("create-deliberation", {});
+                                navigate("create-patient-record", {});
                             }}
                         >
                             <div class="icon">
@@ -143,13 +143,13 @@
                     >
                     <li class="notifications-li">
                         <!-- <my-profile></my-profile> -->
-                        <agent-avatar
+                        <!-- <agent-avatar
                             disable-tooltip={true}
                             disable-copy={true}
                             size={30}
                             agent-pub-key={encodeHashToBase64(client.myPubKey)}
-                        ></agent-avatar>
-                        <!-- <profile-detail agent-pub-key="{encodeHashToBase64(client.myPubKey)}"></profile-detail> -->
+                        ></agent-avatar> -->
+                        <profile-detail agent-pub-key="{encodeHashToBase64(client.myPubKey)}"></profile-detail>
                         <!-- <agent-mention agent-pub-key="{encodeHashToBase64(client.myPubKey)}"></agent-mention> -->
                     </li>
                 </ul>
