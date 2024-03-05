@@ -25,6 +25,7 @@
   // header file import
   import Header from './idsov/Header.svelte';
     import PatientRecordDetail from './idsov/patient_records/PatientRecordDetail.svelte';
+    import RecordsByUser from './idsov/patient_records/RecordsByUser.svelte';
 
   // initialized for client
   let client: AppAgentClient | undefined;
@@ -137,6 +138,8 @@
             <PatientRecordDetail patientRecordHash={currentHash} />  
           {:else if currentView == "create-patient-record"}
             <CreatePatientRecord />
+          {:else if currentView == "dashboard"}
+            <RecordsByUser patientRecordHash={client.myPubKey} />  
           {:else}
           <div id="content" style="display: flex; flex-direction: column; flex: 1;">
             <AllRecords />
@@ -156,7 +159,8 @@
   </profiles-context>
 {/if}
 
-{#if loading}
+<!-- {#if loading} -->
+{#if dna && !loading && currentView != "instructions" && currentView != ""}
   <footer style="margin: 10px;">
     <small>
       <img class="holochain-logo" src={Holochain} alt="holochain logo"/>

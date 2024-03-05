@@ -39,22 +39,13 @@ export type EntryTypes =
  | ({ type: 'Comment'; } & Comment)
  | ({  type: 'PatientRecord'; } & PatientRecord);
 
-
-
 export interface PatientRecord { 
   content: string;
-
   resource_type: string;
-
   date_visited: number;
 }
 
-
-
-
 export interface Comment { 
   content_comment: string;
-
   patient_record_hash: ActionHash;
 }
-

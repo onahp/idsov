@@ -52,17 +52,24 @@ async function createPatientRecord() {
 </script>
 <mwc-snackbar bind:this={errorSnackbar} leading>
 </mwc-snackbar>
-<div class="dashboard-section">
+<!-- <div class="dashboard-section">
   <div class="dashboard-item">
     <div>
       <mwc-textarea outlined label="Content" value={ content } on:input={e => { content = e.target.value;} } required></mwc-textarea>
     </div>
   </div>
-</div>
-<!-- <div class="dashboard-item" style="display: flex; flex-direction: column">
-  <span style="font-size: 18px">Create Patient Record</span>
+</div> -->
+<div class="dashboard-item" style="display: flex; flex-direction: column">
+  <span style="font-size: 20px">New Patient Record</span>
+  <br>
+  <br>
+  <mwc-textarea outlined label="Content" value={ content } on:input={e => { content = e.target.value;} } required></mwc-textarea>          
+  <br>
+  <mwc-textfield outlined label="Resource Type" value={ resourceType } on:input={e => { resourceType = e.target.value; } } required></mwc-textfield>          
+  <br>
+  <vaadin-date-time-picker label="Date Visited" value={new Date(dateVisited / 1000).toISOString()} on:change={e => { dateVisited = new Date(e.target.value).valueOf() * 1000;} } required></vaadin-date-time-picker>          
   
-  <div style="margin-bottom: 16px">
+  <!-- <div style="margin-top: 16px">
     <mwc-textarea outlined label="Content" value={ content } on:input={e => { content = e.target.value;} } required></mwc-textarea>          
   </div>
             
@@ -72,8 +79,7 @@ async function createPatientRecord() {
             
   <div style="margin-bottom: 16px">
     <vaadin-date-time-picker label="Date Visited" value={new Date(dateVisited / 1000).toISOString()} on:change={e => { dateVisited = new Date(e.target.value).valueOf() * 1000;} } required></vaadin-date-time-picker>          
-  </div>
-            
+  </div> -->
 
   <mwc-button 
     raised
@@ -81,4 +87,4 @@ async function createPatientRecord() {
     disabled={!isPatientRecordValid}
     on:click={() => createPatientRecord()}
   ></mwc-button>
-</div> -->
+</div>
