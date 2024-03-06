@@ -44,10 +44,11 @@ async function createPatientRecord() {
     });
     dispatch('patient-record-created', { patientRecordHash: record.signed_action.hashed.hash });
 
-    console.log(`patient record created : ${record.signed_action.hashed.hash}`)
+    console.log(`base_recorder: ${client.myPubKey}`);
+    console.log(`target_record_hash: ${record.signed_action.hashed.hash}`);
     
     // join deliberation
-    const test = await client.callZome({
+    await client.callZome({
       cap_secret: null,
       role_name: 'idsov',
       zome_name: 'patient_records',
@@ -57,10 +58,11 @@ async function createPatientRecord() {
         target_record_hash: record.signed_action.hashed.hash
       },
     });
-    
-    console.log(`test : ${test}`);
+
+    console.log(`--------------> TEST: Hello world`);
 
   } catch (e) {
+    console.log(`FAILED!! add_records_for_recorder :: ${JSON.stringify(e)}`);
     errorSnackbar.labelText = `Error creating the patient record: ${e.data.data}`;
     errorSnackbar.show();
   }

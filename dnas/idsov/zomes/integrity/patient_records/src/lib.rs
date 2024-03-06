@@ -22,6 +22,7 @@ pub enum LinkTypes {
     AllRecords,
     RecordsByRecorder,
     RecorderToRecords,
+    RecordsToRecorder,
 }
 
 #[hdk_extern]
@@ -197,6 +198,14 @@ pub fn validate(op: Op) -> ExternResult<ValidateCallbackResult> {
                         tag,
                     )
                 }
+                LinkTypes::RecordsToRecorder => {
+                    validate_create_link_records_to_recorder(
+                        action,
+                        base_address,
+                        target_address,
+                        tag,
+                    )
+                }
             }
         }
         FlatOp::RegisterDeleteLink {
@@ -255,6 +264,15 @@ pub fn validate(op: Op) -> ExternResult<ValidateCallbackResult> {
                 }
                 LinkTypes::RecorderToRecords => {
                     validate_delete_link_recorder_to_records(
+                        action,
+                        original_action,
+                        base_address,
+                        target_address,
+                        tag,
+                    )
+                }
+                LinkTypes::RecordsToRecorder => {
+                    validate_delete_link_records_to_recorder(
                         action,
                         original_action,
                         base_address,
@@ -491,6 +509,14 @@ pub fn validate(op: Op) -> ExternResult<ValidateCallbackResult> {
                                 tag,
                             )
                         }
+                        LinkTypes::RecordsToRecorder => {
+                            validate_create_link_records_to_recorder(
+                                action,
+                                base_address,
+                                target_address,
+                                tag,
+                            )
+                        }
                     }
                 }
                 OpRecord::DeleteLink { original_action_hash, base_address, action } => {
@@ -563,6 +589,15 @@ pub fn validate(op: Op) -> ExternResult<ValidateCallbackResult> {
                         }
                         LinkTypes::RecorderToRecords => {
                             validate_delete_link_recorder_to_records(
+                                action,
+                                create_link.clone(),
+                                base_address,
+                                create_link.target_address,
+                                create_link.tag,
+                            )
+                        }
+                        LinkTypes::RecordsToRecorder => {
+                            validate_delete_link_records_to_recorder(
                                 action,
                                 create_link.clone(),
                                 base_address,

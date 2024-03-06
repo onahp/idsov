@@ -5,6 +5,7 @@
     import FaBullhorn from "svelte-icons/fa/FaBullhorn.svelte";
     import FaList from "svelte-icons/fa/FaList.svelte";
     import FaHome from "svelte-icons/fa/FaHome.svelte";
+    import FaUsers from "svelte-icons/fa/FaUsers.svelte";
     import { navigate, view } from "../store";
     import { clientContext } from "../contexts";
     import type {
@@ -22,6 +23,7 @@
     import "@holochain-open-dev/profiles/dist/elements/profiles-context.js";
     import type { Profile } from "@holochain-open-dev/profiles";
     import { encodeHashToBase64 } from "@holochain/client";
+    import { svgIcons } from "../svgIcons";
 
     let client: AppAgentClient = (getContext(clientContext) as any).getClient();
     let currentView;
@@ -74,6 +76,38 @@
                             </div>
                         {/if}
                     </li> -->
+
+                    <li class="dashboard" on:click={() => navigate("instructions")}>
+                        {#if currentView == "instructions"}
+                            <div class="dashboard-icon" style="color:#1952bb">
+                                <FaHome />
+                            </div>
+                        {:else}
+                            <div class="dashboard-icon">
+                                <FaHome />
+                            </div>
+                        {/if}
+                    </li>
+
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        style="margin: 0 10"
+                        width="1"
+                        height="30"
+                        viewBox="0 0 1 30"
+                        ><defs
+                            ><style>
+                                .a {
+                                    fill: none;
+                                    stroke: rgba(0, 0, 0, 0.15);
+                                }
+                            </style></defs
+                        ><line
+                            class="a"
+                            y2="30"
+                            transform="translate(0.5)"
+                        /></svg
+                    >
 
                     <li class="dashboard" on:click={goToDashboard}>
                         {#if currentView == "dashboard"}

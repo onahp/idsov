@@ -24,8 +24,8 @@
   
   // header file import
   import Header from './idsov/Header.svelte';
-    import PatientRecordDetail from './idsov/patient_records/PatientRecordDetail.svelte';
-    import RecordsByUser from './idsov/patient_records/RecordsByUser.svelte';
+  import PatientRecordDetail from './idsov/patient_records/PatientRecordDetail.svelte';
+  import RecordsByUser from './idsov/patient_records/RecordsByUser.svelte';
 
   // initialized for client
   let client: AppAgentClient | undefined;
@@ -124,7 +124,7 @@
     <mwc-circular-progress indeterminate />
   </div>
 {:else}
-  <profiles-context store={profilesStore}>
+  <profiles-context store="{profilesStore}">
     <profile-prompt>
       <main class="idsov-container">
         <Header />
