@@ -70,20 +70,23 @@ async function updatePatientRecord() {
 <mwc-snackbar bind:this={errorSnackbar} leading>
 </mwc-snackbar>
 <div style="display: flex; flex-direction: column">
-  <span style="font-size: 18px">Edit PatientRecord</span>
+  <!-- <span style="font-size: 18px">Modify Patient Record</span> -->
+  <mwc-textarea outlined label="Content" value={ content } on:input={e => { content = e.target.value;} } required></mwc-textarea>
+  <br>
+  <mwc-textfield outlined label="Resource Type" value={ resourceType } on:input={e => { resourceType = e.target.value; } } required></mwc-textfield>
+  <br>
+  <vaadin-date-time-picker label="Date Visited" value={new Date(dateVisited / 1000).toISOString()} on:change={e => { dateVisited = new Date(e.target.value).valueOf() * 1000;} } required></vaadin-date-time-picker>
+  <!-- <div style="margin-bottom: 16px"> -->
+  <!--   <mwc-textarea outlined label="Content" value={ content } on:input={e => { content = e.target.value;} } required></mwc-textarea> -->
+  <!-- </div> -->
 
-  <div style="margin-bottom: 16px">
-    <mwc-textarea outlined label="Content" value={ content } on:input={e => { content = e.target.value;} } required></mwc-textarea>
-  </div>
+  <!-- <div style="margin-bottom: 16px"> -->
+  <!--   <mwc-textfield outlined label="Resource Type" value={ resourceType } on:input={e => { resourceType = e.target.value; } } required></mwc-textfield> -->
+  <!-- </div> -->
 
-  <div style="margin-bottom: 16px">
-    <mwc-textfield outlined label="Resource Type" value={ resourceType } on:input={e => { resourceType = e.target.value; } } required></mwc-textfield>
-  </div>
-
-  <div style="margin-bottom: 16px">
-    <vaadin-date-time-picker label="Date Visited" value={new Date(dateVisited / 1000).toISOString()} on:change={e => { dateVisited = new Date(e.target.value).valueOf() * 1000;} } required></vaadin-date-time-picker>
-  </div>
-
+  <!-- <div style="margin-bottom: 16px"> -->
+  <!--   <vaadin-date-time-picker label="Date Visited" value={new Date(dateVisited / 1000).toISOString()} on:change={e => { dateVisited = new Date(e.target.value).valueOf() * 1000;} } required></vaadin-date-time-picker> -->
+  <!-- </div> -->
 
   <div style="display: flex; flex-direction: row">
     <mwc-button

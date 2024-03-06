@@ -62,4 +62,3 @@ async function fetchPatientRecords() {
   {/each}
 </div>
 {/if}
-

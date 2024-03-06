@@ -46,7 +46,7 @@ onMount(async () => {
 {:else if error}
 <span>Error fetching comments: ${error.data.data}.</span>
 {:else if links.length === 0}
-<span>No comments found for this patient record.</span>
+<span>No medical notes found for this patient record.</span>
 {:else}
 <div style="display: flex; flex-direction: column">
   {#each links as link}

@@ -99,22 +99,25 @@ async function deletePatientRecord() {
 {:else}
 
 <div class="dashboard-section">
-  <div class="dashboard-item">
+  <div class="dashboard-item" on:click={() => { editing = true; }}>
     <div><strong>Resource Type: </strong>{ patientRecord.resource_type }</div>
     <div><strong>Doctors Notes: </strong>{ patientRecord.content }</div>
     <div class="issue-info">
+    <!-- <div style="display: flex; flex-direction: row"> -->
       <div>
         <!-- <SvgIcon color="#6fcae8" icon="faBars"></SvgIcon> -->
-        <strong>Clinician Notes</strong>
+        <strong>Clinical Notes</strong>
         <!-- <div><i class="fas fa-file"></i> -->
       </div>
     </div>
     <div class="dashboard-item-details">
       {#if patientRecord}
-        <span>{CommentsForPatientRecord.length} comments</span>
+        <!-- <span>{CommentsForPatientRecord.length} comments</span> -->
+        <span><CommentsForPatientRecord patientRecordHash="{patientRecordHash}"></CommentsForPatientRecord></span>
       {/if}
-    </div>
     <div style="text-align: right;">{new Date(patientRecord.date_visited / 1000).toLocaleString()}</div>
+    </div>
+    <!-- </div> -->
     <!-- <mwc-icon-button style="margin-left: 8px" icon="edit" on:click={() => { editing = true; } }></mwc-icon-button> -->
     <!-- <mwc-icon-button style="margin-left: 6px" icon="delete" on:click={() => deletePatientRecord()}></mwc-icon-button> -->
   </div>
@@ -142,8 +145,7 @@ async function deletePatientRecord() {
     <span style="white-space: pre-line">{ new Date(patientRecord.date_visited / 1000).toLocaleString() }</span>
   </div>
 
-  <CreateComment patientRecordHash="{patientRecordHash}"></CreateComment> -->
+  <CreateComment patientRecordHash="{patientRecordHash}"></CreateComment>
   <!-- <CommentsForPatientRecord patientRecordHash="{patientRecordHash}"></CommentsForPatientRecord>
 </div> -->
 {/if}
-
