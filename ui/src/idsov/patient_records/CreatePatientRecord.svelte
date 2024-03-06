@@ -43,6 +43,23 @@ async function createPatientRecord() {
       payload: patientRecordEntry,
     });
     dispatch('patient-record-created', { patientRecordHash: record.signed_action.hashed.hash });
+
+    console.log(`patient record created : ${record.signed_action.hashed.hash}`)
+    
+    // join deliberation
+    const test = await client.callZome({
+      cap_secret: null,
+      role_name: 'idsov',
+      zome_name: 'patient_records',
+      fn_name: 'add_records_for_recorder',
+      payload: {
+        base_recorder: client.myPubKey,
+        target_record_hash: record.signed_action.hashed.hash
+      },
+    });
+    
+    console.log(`test : ${test}`);
+
   } catch (e) {
     errorSnackbar.labelText = `Error creating the patient record: ${e.data.data}`;
     errorSnackbar.show();

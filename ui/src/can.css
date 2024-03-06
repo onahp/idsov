@@ -375,3 +375,27 @@
     width: 300px;
     margin: auto;
   } */  
+  
+footer {
+  text-align: center;
+}
+
+.holochain-logo {
+  height: 1.2em;
+  top: 0.3em;
+  position: relative;
+}
+
+#commentsNumber {
+  position: relative;
+  top: -42px;
+  right: -48px;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  background-color: #00ff7e;
+  padding: 4px;
+  border-radius: 100%;
+  width: 17px;
+  height: 17px;
+}

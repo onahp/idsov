@@ -3,10 +3,12 @@ pub mod comment;
 pub mod patient_record;
 use hdk::prelude::*;
 use patient_records_integrity::*;
+
 #[hdk_extern]
 pub fn init(_: ()) -> ExternResult<InitCallbackResult> {
     Ok(InitCallbackResult::Pass)
 }
+
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(tag = "type")]
 pub enum Signal {

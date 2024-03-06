@@ -21,7 +21,8 @@
     "@material/mwc-textarea": "^0.27.0",
     "@material/mwc-textfield": "^0.27.0",
     "@msgpack/msgpack": "^2.7.2",
-    "@vaadin/date-time-picker": "^23.2.8"
+    "@vaadin/date-time-picker": "^23.2.8",
+    "socket.io-client": "^4.7.4"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^2.0.2",

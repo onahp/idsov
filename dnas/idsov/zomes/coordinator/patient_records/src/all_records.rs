@@ -1,6 +1,31 @@
 use hdk::prelude::*;
 use patient_records_integrity::*;
 
+#[derive(Serialize, Deserialize, Debug)]
+pub struct AddRecordForRecorderInput {
+    pub base_recorder: AgentPubKey,
+    pub target_record_hash: ActionHash,
+}
+
+#[hdk_extern]
+pub fn add_records_for_recorder(
+    input: AddRecordForRecorderInput,
+) -> ExternResult<()> {
+    create_link(
+        input.base_recorder.clone(),
+        input.target_record_hash.clone(),
+        LinkTypes::RecorderToRecords,
+        (),
+    )?;
+    create_link(
+        input.target_record_hash,
+        input.base_recorder,
+        LinkTypes::RecorderToRecords,
+        (),
+    )?;
+    Ok(())
+}
+
 #[hdk_extern]
 pub fn get_all_records(_: ()) -> ExternResult<Vec<Link>> {
     let path = Path::from("all_records");
@@ -9,11 +34,11 @@ pub fn get_all_records(_: ()) -> ExternResult<Vec<Link>> {
 
 
 #[hdk_extern]
-pub fn get_all_records_by_recorder(
+pub fn get_records_by_recorder(
     recorder: AgentPubKey,
 ) -> ExternResult<Vec<Record>> {
 
-    let links = get_links(recorder, LinkTypes::RecordsByRecorder, None)?;
+    let links = get_links(recorder, LinkTypes::RecorderToRecords, None)?;
 
     let get_input: Vec<GetInput> = links
         .into_iter()

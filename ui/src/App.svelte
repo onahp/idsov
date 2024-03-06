@@ -53,7 +53,7 @@
         .callZome({
             cap_secret: null,
             role_name: 'idsov',
-            zome_name: 'idsov',
+            zome_name: 'patient_records',
             fn_name: 'get_dna_hash',
             payload: null,
         });
@@ -61,7 +61,6 @@
       console.log(dna)
     } catch (e) {
       console.log("no dna")
-
       console.log(e)
     }
 
@@ -136,10 +135,10 @@
           </div>
           {:else if currentView == "patient-record"}
             <PatientRecordDetail patientRecordHash={currentHash} />  
+          {:else if currentView == "dashboard"}
+            <RecordsByUser userRecordHash={client.myPubKey} />  
           {:else if currentView == "create-patient-record"}
             <CreatePatientRecord />
-          {:else if currentView == "dashboard"}
-            <RecordsByUser patientRecordHash={client.myPubKey} />  
           {:else}
           <div id="content" style="display: flex; flex-direction: column; flex: 1;">
             <AllRecords />
@@ -147,62 +146,31 @@
           {/if}
         </div>
         <!-- <list-profiles on:agent-selected={e => alert(e.detail.agentPubKey)}></list-profiles> -->
-        <br>
+        <!-- <br> -->
         <!-- <div class="white-container">
           <div id="content" style="display: flex; flex-direction: column; flex: 1;">
             <list-profiles on:agent-selected={e => alert(e.detail.agentPubKey)}></list-profiles>
           </div>
         </div> -->
-          <list-profiles on:agent-selected={e => alert(e.detail.agentPubKey)}></list-profiles>
+          <!-- <list-profiles on:agent-selected={e => alert(e.detail.agentPubKey)}></list-profiles> -->
       </main>
     </profile-prompt>
   </profiles-context>
 {/if}
 
 <!-- {#if loading} -->
-{#if dna && !loading && currentView != "instructions" && currentView != ""}
+{#if dna && !loading && currentView != "" && currentView != ""}
   <footer style="margin: 10px;">
     <small>
       <img class="holochain-logo" src={Holochain} alt="holochain logo"/>
-      Private Holochain network: {dna}
+      Private Holochain Network: {dna}
     </small>
   </footer>
 {/if}
 
 <style>
-  /* :root {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
-      Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  }
-
   main {
-    text-align: center;
-    padding: 1em;
-    max-width: 240px;
-    margin: 0 auto;
   }
-
-  img {
-    height: 16rem;
-    width: 16rem;
-  }
-
-  h1 {
-    color: #ff3e00;
-    text-transform: uppercase;
-    font-size: 4rem;
-    font-weight: 100;
-    line-height: 1.1;
-    margin: 2rem auto;
-    max-width: 14rem;
-  }
-
-  p {
-    max-width: 14rem;
-    margin: 1rem auto;
-    line-height: 1.35;
-  } */
-
   @media (min-width: 640px) {
     main {
       max-width: none;
