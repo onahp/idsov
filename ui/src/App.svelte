@@ -162,7 +162,7 @@
 {#if dna && !loading && currentView != "" && currentView != ""}
   <footer style="margin: 10px;">
     <small>
-      <img class="holochain-logo" src={Holochain} alt="holochain logo"/>
+      <!-- <img class="holochain-logo" src={Holochain} alt="holochain logo"/> -->
       Private Holochain Network: {dna}
     </small>
   </footer>
