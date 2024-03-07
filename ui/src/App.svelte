@@ -128,6 +128,13 @@
     <profile-prompt>
       <main class="idsov-container">
         <Header />
+        {#if dna && !loading && currentView != "" && currentView != ""}
+          <footer style="margin: 10px;">
+            <small>
+              Private Holochain Network: {dna}
+            </small>
+          </footer>
+        {/if}
         <div class="white-container">
           {#if loading}
             <div style="display: flex; flex: 1; align-items: center; justify-content: center">
@@ -159,14 +166,14 @@
 {/if}
 
 <!-- {#if loading} -->
-{#if dna && !loading && currentView != "" && currentView != ""}
-  <footer style="margin: 10px;">
-    <small>
-      <!-- <img class="holochain-logo" src={Holochain} alt="holochain logo"/> -->
-      Private Holochain Network: {dna}
-    </small>
-  </footer>
-{/if}
+<!-- {#if dna && !loading && currentView != "" && currentView != ""} -->
+<!--   <footer style="margin: 10px;"> -->
+<!--     <small> -->
+<!--       <\!-- <img class="holochain-logo" src={Holochain} alt="holochain logo"/> -\-> -->
+<!--       Private Holochain Network: {dna} -->
+<!--     </small> -->
+<!--   </footer> -->
+<!-- {/if} -->
 
 <style>
   main {
