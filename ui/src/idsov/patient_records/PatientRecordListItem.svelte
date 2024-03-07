@@ -13,7 +13,7 @@ import EditPatientRecord from './EditPatientRecord.svelte';
 import CreateComment from './CreateComment.svelte';
 import CommentsForPatientRecord from './CommentsForPatientRecord.svelte';
 import SvgIcon from '../../SvgIcon.svelte';
-    import AllRecords from './AllRecords.svelte';
+import AllRecords from './AllRecords.svelte';
 
 const dispatch = createEventDispatcher();
 
