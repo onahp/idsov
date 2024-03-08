@@ -4,6 +4,7 @@ import '@material/mwc-circular-progress';
 import type { EntryHash, Record, AgentPubKey, ActionHash, AppAgentClient, NewEntryAction } from '@holochain/client';
 import { clientContext } from '../../contexts';
 import PatientRecordListItem from './PatientRecordListItem.svelte';
+import DashboardPatientRecordListItem from './DashboardPatientRecordListItem.svelte';
 import type { PatientRecordsSignal } from './types';
 
 
@@ -52,12 +53,12 @@ async function fetchPatientRecords() {
 {:else if error}
 <span>Error fetching the patient records: {error.data.data}.</span>
 {:else if hashes.length === 0}
-<span>No patient records found.</span>
+<span>No patient records found</span>
 {:else}
 <div style="display: flex; flex-direction: column">
   {#each hashes as hash}
     <div style="margin-bottom: 8px;">
-      <PatientRecordListItem patientRecordHash={hash}  on:patient-record-deleted={() => fetchPatientRecords()}></PatientRecordListItem>
+      <DashboardPatientRecordListItem patientRecordHash={hash}  on:patient-record-deleted={() => fetchPatientRecords()}></DashboardPatientRecordListItem>
     </div>
   {/each}
 </div>

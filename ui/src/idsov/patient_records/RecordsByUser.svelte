@@ -11,6 +11,13 @@ import "@holochain-open-dev/profiles/dist/elements/profiles-context.js";
 import type { Profile } from "@holochain-open-dev/profiles";
 import { encodeHashToBase64, fakeAgentPubKey } from "@holochain/client";
 
+// PatientRecordListItem imports
+import { decode } from '@msgpack/msgpack';
+import type { PatientRecord } from './types';
+let record: Record | undefined;
+let patientRecord: PatientRecord | undefined;
+export let patientRecordHash: ActionHash;
+
 let client: AppAgentClient = (getContext(clientContext) as any).getClient();
 
 let hashes: Array<ActionHash> | undefined;
@@ -19,7 +26,7 @@ let error: any = undefined;
 
 export let userRecordHash: AgentPubKey;
 
-$: hashes, loading, error;
+$: hashes, loading, error, record, patientRecord;
 
 onMount(async () => {
   if (userRecordHash === undefined) {
@@ -40,6 +47,12 @@ onMount(async () => {
     hashes = links.map(l => l.signed_action.hashed.hash);
     // hashes = links.map(r => r.signed_hash.hashed.hash);
     console.log(`call_zome:: get_records_for_recorder - ${JSON.stringify(hashes)}`);
+    console.log(hashes.length);
+    
+    for (var i = 0; i < hashes.length; i++) {
+      console.log(`call_individual_hash :: ${JSON.stringify(hashes[i])}`);
+    }
+
   } catch (e) {
     error = e;
   }
@@ -56,21 +69,45 @@ onMount(async () => {
   });
 });
 
-async function fetchPatientRecords() {
+// async function fetchPatientRecords() {
+//   try {
+//     const links = await client.callZome({
+//       cap_secret: null,
+//       role_name: 'idsov',
+//       zome_name: 'patient_records',
+//       fn_name: 'get_records_for_recorder',
+//       payload: userRecordHash,
+//     });
+//     // hashes = links.map(l => l.target);
+//     // hashes = links.map(r => r.signed_hash.hashed.hash);
+//     // console.log(JSON.stringify(hashes));
+//   } catch (e) {
+//     error = e;
+//   }
+//   loading = false;
+// }
+
+async function fetchPatientRecord() {
+  loading = true;
+  error = undefined;
+  record = undefined;
+  patientRecord = undefined;
+  
   try {
-    const links = await client.callZome({
+    record = await client.callZome({
       cap_secret: null,
       role_name: 'idsov',
       zome_name: 'patient_records',
-      fn_name: 'get_records_for_recorder',
-      payload: userRecordHash,
+      fn_name: 'get_latest_patient_record',
+      payload: patientRecordHash,
     });
-    // hashes = links.map(l => l.target);
-    // hashes = links.map(r => r.signed_hash.hashed.hash);
-    // console.log(JSON.stringify(hashes));
+    if (record) {
+      patientRecord = decode((record.entry as any).Present.entry) as PatientRecord;
+    }
   } catch (e) {
     error = e;
   }
+
   loading = false;
 }
 
@@ -90,13 +127,14 @@ async function fetchPatientRecords() {
 {:else if hashes.length === 0}
 <span>No patient records found.</span>
 {:else}
-<div style="display: flex; flex-direction: column">
-  {#each hashes.reverse() as hash}
-    <div style="margin-bottom: 8px;">
-      <PatientRecordListItem patientRecordHash={hash}></PatientRecordListItem>
-      <!-- <PatientRecordListItem patientRecordHash={hash}  on:patient-record-deleted={() => fetchPatientRecords()}></PatientRecordListItem> -->
-    </div>
-  {/each}
-</div>
-{/if}
+  <div style="display: flex; flex-direction: column">
+    <!-- row 1 -->
+    {#each hashes.reverse() as hash}
+      <div style="margin-bottom: 8px;">
+        <PatientRecordListItem patientRecordHash={hash}></PatientRecordListItem>
+        <!-- <PatientRecordListItem patientRecordHash={hash}  on:patient-record-deleted={() => fetchPatientRecords()}></PatientRecordListItem> -->
 
+      </div>
+    {/each}
+  </div>
+{/if}

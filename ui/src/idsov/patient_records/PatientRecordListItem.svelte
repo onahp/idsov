@@ -118,7 +118,6 @@ async function deletePatientRecord() {
         </div>
       </li>
     </ul>
-
     <!-- <div><strong>Resource Type: </strong>{ patientRecord.resource_type }</div> -->
     <!-- <div><strong>Doctors Notes: </strong>{ patientRecord.content }</div> -->
     <!-- <div class="issue-info"> -->

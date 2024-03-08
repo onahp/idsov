@@ -89,18 +89,20 @@ async function updatePatientRecord() {
   <!-- </div> -->
 
   <div style="display: flex; flex-direction: row">
-    <mwc-button
+    <button
+      class="btn btn-error btn-outline"
       outlined
       label="Cancel"
       on:click={() => dispatch('edit-canceled')}
       style="flex: 1; margin-right: 16px"
-    ></mwc-button>
-    <mwc-button
+    >Cancel</button>
+    <button
+      class="btn btn-success btn-outline"
       raised
       label="Save"
       disabled={!isPatientRecordValid}
       on:click={() => updatePatientRecord()}
       style="flex: 1;"
-    ></mwc-button>
+    >Save</button>
   </div>
 </div>
