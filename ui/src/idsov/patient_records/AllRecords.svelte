@@ -17,14 +17,13 @@ let error: any = undefined;
 let record: Record | undefined;
 let patientRecord: PatientRecord | undefined;
 let patients = [];
+let result = null;
 
 // $: hashes, loading, error;
-$: hashes, loading, error, record, patientRecord, patients;
+$: hashes, loading, error, record, patientRecord, patients, result;
 
 onMount(async () => {
-
-  // await fetchPatientRecords();
-
+  
   try {
     const links = await client.callZome({
       cap_secret: null,
@@ -61,6 +60,15 @@ onMount(async () => {
   }
 
   loading = false;
+  
+  // dummy fetch data - success
+  const response = await fetch("https://jsonplaceholder.typicode.com/posts");
+  const data = await response.json();
+  console.log(data);
+  
+  // dummy post data - success
+  doPost(patients);
+
 });
 
 async function fetchPatientRecord(hash) {
@@ -89,6 +97,20 @@ async function fetchPatientRecord(hash) {
   loading = false;
 }
 
+async function doPost (data) {
+  const res = await fetch('https://httpbin.org/post', {
+    method: 'POST',
+    body: JSON.stringify({
+      data,
+    })
+  });
+    
+  const json = await res.json()
+  result = JSON.stringify(json)
+  console.log(`POST Success :: ${result}`);
+}
+
+
 // async function fetchPatientRecords() {
 //   try {
 //    const links = await client.callZome({
@@ -107,30 +129,6 @@ async function fetchPatientRecord(hash) {
 // }
 
 </script>
-
-<!-- <div class="flex flex-col w-full border-opacity-50"> -->
-<!--   <div class="grid card bg-base-100 rounded-box place-items-center"> -->
-<!--     <h1 class="text-1xl font-bold">Shared Dashboard</h1> -->
-<!--     {#if loading} -->
-<!--       <div style="display: flex; flex: 1; align-items: center; justify-content: center"> -->
-<!--         <progress class="progress w-56"></progress> -->
-<!--       </div> -->
-<!--     {:else if error} -->
-<!--       <span>Error fetching the patient records: {error.data.data}.</span> -->
-<!--     {:else if hashes.length === 0} -->
-<!--       <span>No patient records found</span> -->
-<!--     {:else} -->
-<!--       <div style="display: flex; flex-direction: column"> -->
-<!--         {#each hashes as hash} -->
-<!--           <div style="margin-bottom: 8px;"> -->
-<!--             <DashboardPatientRecordListItem patientRecordHash={hash}  on:patient-record-deleted={() => fetchPatientRecords()}></DashboardPatientRecordListItem> -->
-<!--           </div> -->
-<!--         {/each} -->
-<!--       </div> -->
-<!--     {/if} -->
-<!--   </div> -->
-<!-- </div> -->
-
 
 <div class="flex flex-col w-full border-opacity-50">
   <div class="grid card bg-base-100 rounded-box">
