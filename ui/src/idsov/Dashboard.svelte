@@ -3,12 +3,13 @@
   import type { ActionHash, AppAgentClient } from '@holochain/client';
   import { AppAgentWebsocket } from '@holochain/client';
   import '@material/mwc-circular-progress';
-  import { clientContext, profilesStoreContext } from './contexts';
+  import { clientContext, profilesStoreContext } from '../contexts';
 
   // custom records that are implemented
-  import AllRecords from './idsov/patient_records/AllRecords.svelte';
-  import CreatePatientRecord from './idsov/patient_records/CreatePatientRecord.svelte';
-  import { view, viewHash, navigate, setWeClient, dAppDna } from './store';
+  // import AllRecords from '';
+  import AllRecords from './patient_records/AllRecords.svelte';
+  import CreatePatientRecord from './patient_records/CreatePatientRecord.svelte';
+  import { view, viewHash, navigate, setWeClient } from '../store';
   import { Router, Link, Route } from 'svelte-routing';
 
   // this can be placed in the index.js, at the top level of your web-app.
@@ -21,14 +22,16 @@
   import "@holochain-open-dev/profiles/dist/elements/profile-detail.js";
 
   // files
-  import Holochain from "./assets/holochain.png";
+  import Holochain from "../assets/holochain.png";
   
   // header file import
-  import Welcome from './Welcome.svelte';
-  import Header from './idsov/Header.svelte';
-  import Timeline from './idsov/Timeline.svelte';
-  import Footer from './idsov/Footer.svelte';
-  import Dashboard from './idsov/Dashboard.svelte';
+  import Welcome from '../Welcome.svelte';
+  import Header from '../idsov/Header.svelte';
+  import Timeline from '../idsov/Timeline.svelte';
+  import Footer from '../idsov/Footer.svelte';
+  import PatientRecordDetail from './patient_records/PatientRecordDetail.svelte';
+  import RecordsByUser from './patient_records/RecordsByUser.svelte';
+  import Dashboard from '../idsov/Dashboard.svelte';
 
   // initialized for client
   let client: AppAgentClient | undefined;
@@ -62,8 +65,7 @@
             fn_name: 'get_dna_hash',
             payload: null,
         });
-      console.log(`DNA Zome Call : ${dna}`)
-      dAppDna.set(dna);
+      console.log(`dna ${dna}`)
     } catch (e) {
       console.log("no dna")
       console.log(e)
@@ -91,26 +93,32 @@
   });
   
 
-  console.log(`profilesStore :: ${profilesStore}`)
+  console.log(`Some profilesStore :: ${profilesStore}`)
   console.log(`loading :: ${loading}`);
 
 </script>
 
-<Router {url}>
-
-  <div class="idsov-container">
-    {#if !loading}
-      <profiles-context store="{profilesStore}">
-      <Header />
-      <div>
-        <Route path="/" component={Welcome} />
-        <Route path="/timeline" component={Timeline} />
-        <Route path="/dashboard" component={Dashboard} />
+<profiles-context store="{profilesStore}">
+  <profile-prompt>
+    <!-- <main> -->
+      <!-- <Header /> -->
+      <div class="flex flex-col w-full border-opacity-50">
+        {#if loading}
+          <progress class="progress w-56"></progress>
+        {:else if currentView == "patient-record"}
+          <PatientRecordDetail patientRecordHash={currentHash} />
+        {:else if currentView == "dashboard"}
+          <RecordsByUser userRecordHash={client.myPubKey} />
+        {:else if currentView == "create-patient-record"}
+          <CreatePatientRecord />
+        {:else}
+          <!-- <div class="grid h-20 card bg-base-300 rounded-box place-items-center"> -->
+            <AllRecords />
+            <!-- </div> -->
+          {/if}
+          <!-- <div class="grid h-20 card bg-base-300 rounded-box place-items-center">content</div> -->
+          <div class="divider"></div>
       </div>
-      </profiles-context>
-
-    {/if}
-  </div>
-  <Footer />
-
-</Router>
+      <!-- </main> -->
+  </profile-prompt>
+</profiles-context>

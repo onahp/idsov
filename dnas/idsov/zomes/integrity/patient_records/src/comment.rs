@@ -1,10 +1,12 @@
 use hdi::prelude::*;
+
 #[hdk_entry_helper]
 #[derive(Clone, PartialEq)]
 pub struct Comment {
     pub content_comment: String,
     pub patient_record_hash: ActionHash,
 }
+
 pub fn validate_create_comment(
     _action: EntryCreationAction,
     comment: Comment,
@@ -21,6 +23,7 @@ pub fn validate_create_comment(
         )?;
     Ok(ValidateCallbackResult::Valid)
 }
+
 pub fn validate_update_comment(
     _action: Update,
     _comment: Comment,
@@ -29,6 +32,7 @@ pub fn validate_update_comment(
 ) -> ExternResult<ValidateCallbackResult> {
     Ok(ValidateCallbackResult::Valid)
 }
+
 pub fn validate_delete_comment(
     _action: Delete,
     _original_action: EntryCreationAction,
@@ -36,6 +40,7 @@ pub fn validate_delete_comment(
 ) -> ExternResult<ValidateCallbackResult> {
     Ok(ValidateCallbackResult::Valid)
 }
+
 pub fn validate_create_link_patient_record_to_comments(
     _action: CreateLink,
     base_address: AnyLinkableHash,
@@ -78,6 +83,7 @@ pub fn validate_create_link_patient_record_to_comments(
         )?;
     Ok(ValidateCallbackResult::Valid)
 }
+
 pub fn validate_delete_link_patient_record_to_comments(
     _action: DeleteLink,
     _original_action: CreateLink,
@@ -87,6 +93,7 @@ pub fn validate_delete_link_patient_record_to_comments(
 ) -> ExternResult<ValidateCallbackResult> {
     Ok(ValidateCallbackResult::Valid)
 }
+
 pub fn validate_create_link_comment_updates(
     _action: CreateLink,
     base_address: AnyLinkableHash,
@@ -129,6 +136,7 @@ pub fn validate_create_link_comment_updates(
         )?;
     Ok(ValidateCallbackResult::Valid)
 }
+
 pub fn validate_delete_link_comment_updates(
     _action: DeleteLink,
     _original_action: CreateLink,

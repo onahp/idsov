@@ -43,6 +43,11 @@ export interface PatientRecord {
   content: string;
   resource_type: string;
   date_visited: number;
+  whanau: string,
+  ingoa: string,
+  no_hea_koe: string,
+  maunga: string,
+  moana: string,
 }
 
 export interface Comment { 

@@ -4,6 +4,7 @@ export const view = writable("home");
 export const viewHash = writable(new Uint8Array([]));
 export const notifications = writable([]);
 export const weClientStored = writable(null);
+export const dAppDna = writable("dna");
 
 export function navigate(location, hash) {
     view.update(v => location);
@@ -17,4 +18,8 @@ export function notifications_update(new_notifications) {
 
 export function setWeClient(client) {
     weClientStored.update(v => client);
+}
+
+export function setDna(dna) {
+  dAppDna.update(v => dna);
 }

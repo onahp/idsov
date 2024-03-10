@@ -82,14 +82,13 @@
 
 {#if loading}
   <div style="display: flex; flex: 1; align-items: center; justify-content: center">
-    <mwc-circular-progress indeterminate></mwc-circular-progress>
+    <progress class="progress w-56"></progress>
   </div>
 {:else if error}
   <span>Error fetching the patient record: {error.data.data}</span>
-  {:else}
-
-  <div class="dashboard-section">
-    <div class="dashboard-item">
+{:else}
+  <!-- <div class="dashboard-section"> -->
+  <!--   <div class="dashboard-item"> -->
 
       <!-- ?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80 -->
 
@@ -109,6 +108,6 @@
         </li>
       </ul>
 
-    </div>
-  </div>
+<!--     </div> -->
+<!--   </div> -->
 {/if}

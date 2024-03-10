@@ -44,17 +44,17 @@
 /*     margin-right: 6px; */
 /*   } */
   
-/*   .white-container { */
-/*     background-color: white; */
-/*     padding: 25px; */
-/*     min-height: 70vh; */
-/*     /\* min-width: 68%; *\/ */
-/*     /\* width: 94% !important; *\/ */
-/*     width: 85vw; */
-/*     margin-left: 5vw; */
-/*     border-radius: 20px; */
-/*     text-align: left; */
-/*   } */
+.white-container {
+  background-color: white;
+  padding: 25px;
+  min-height: 70vh;
+  /* min-width: 68%; */
+  /* width: 94% !important; */
+  width: 85vw;
+  margin-left: 5vw;
+  border-radius: 20px;
+  text-align: left;
+}
   
 /*   .invisible-outer { */
 /*     background-color: transparent; */

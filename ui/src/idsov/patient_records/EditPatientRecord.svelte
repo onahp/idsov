@@ -67,27 +67,29 @@ async function updatePatientRecord() {
 }
 
 </script>
+
 <mwc-snackbar bind:this={errorSnackbar} leading>
 </mwc-snackbar>
-<div style="display: flex; flex-direction: column">
-  <!-- <span style="font-size: 18px">Modify Patient Record</span> -->
-  <mwc-textarea outlined label="Content" value={ content } on:input={e => { content = e.target.value;} } required></mwc-textarea>
-  <br>
-  <mwc-textfield outlined label="Resource Type" value={ resourceType } on:input={e => { resourceType = e.target.value; } } required></mwc-textfield>
-  <br>
-  <vaadin-date-time-picker label="Date Visited" value={new Date(dateVisited / 1000).toISOString()} on:change={e => { dateVisited = new Date(e.target.value).valueOf() * 1000;} } required></vaadin-date-time-picker>
-  <!-- <div style="margin-bottom: 16px"> -->
-  <!--   <mwc-textarea outlined label="Content" value={ content } on:input={e => { content = e.target.value;} } required></mwc-textarea> -->
-  <!-- </div> -->
 
-  <!-- <div style="margin-bottom: 16px"> -->
-  <!--   <mwc-textfield outlined label="Resource Type" value={ resourceType } on:input={e => { resourceType = e.target.value; } } required></mwc-textfield> -->
-  <!-- </div> -->
+<div class="flex flex-col w-full border-opacity-50">
+  <div class="grid card bg-base-100 rounded-box place-items-center">
 
-  <!-- <div style="margin-bottom: 16px"> -->
-  <!--   <vaadin-date-time-picker label="Date Visited" value={new Date(dateVisited / 1000).toISOString()} on:change={e => { dateVisited = new Date(e.target.value).valueOf() * 1000;} } required></vaadin-date-time-picker> -->
-  <!-- </div> -->
-
+    <label class="input input-bordered flex items-center gap-2 w-full bg-base-200">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-journal-text" viewBox="0 0 16 16"><path d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5m0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5"/><path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2"/><path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1z"/>
+      </svg>
+      <input type="text" class="grow" placeholder="Medical Note" value={ content } on:input={e => { content = e.target.value;} } required/>
+      <span class="badge badge-warning">Required</span>
+    </label>
+    <br>
+    <label class="input input-bordered flex items-center gap-2 w-full bg-base-200">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar2-event" viewBox="0 0 16 16"><path d="M11 7.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z"/><path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M2 2a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1z"/><path d="M2.5 4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5z"/>
+      </svg>
+      <input type="text" class="grow" placeholder="Type of Visit" value={ resourceType } on:input={e => { resourceType = e.target.value; } } required/>
+      <span class="badge badge-warning">Required</span>
+    </label>
+    <br>
+    <!-- <vaadin-date-time-picker label="Date Visited" value={new Date(dateVisited / 1000).toISOString()} on:change={e => { dateVisited = new Date(e.target.value).valueOf() * 1000;} } required></vaadin-date-time-picker> -->
+  </div>
   <div style="display: flex; flex-direction: row">
     <button
       class="btn btn-error btn-outline"
@@ -95,7 +97,7 @@ async function updatePatientRecord() {
       label="Cancel"
       on:click={() => dispatch('edit-canceled')}
       style="flex: 1; margin-right: 16px"
-    >Cancel</button>
+      >Cancel</button>
     <button
       class="btn btn-success btn-outline"
       raised
@@ -103,6 +105,44 @@ async function updatePatientRecord() {
       disabled={!isPatientRecordValid}
       on:click={() => updatePatientRecord()}
       style="flex: 1;"
-    >Save</button>
+      >Save</button>
   </div>
 </div>
+
+<!-- <div style="display: flex; flex-direction: column"> -->
+<!--   <\!-- <span style="font-size: 18px">Modify Patient Record</span> -\-> -->
+<!--   <mwc-textarea outlined label="Content" value={ content } on:input={e => { content = e.target.value;} } required></mwc-textarea> -->
+<!--   <br> -->
+<!--   <mwc-textfield outlined label="Resource Type" value={ resourceType } on:input={e => { resourceType = e.target.value; } } required></mwc-textfield> -->
+<!--   <br> -->
+<!--   <vaadin-date-time-picker label="Date Visited" value={new Date(dateVisited / 1000).toISOString()} on:change={e => { dateVisited = new Date(e.target.value).valueOf() * 1000;} } required></vaadin-date-time-picker> -->
+<!--   <\!-- <div style="margin-bottom: 16px"> -\-> -->
+<!--   <\!--   <mwc-textarea outlined label="Content" value={ content } on:input={e => { content = e.target.value;} } required></mwc-textarea> -\-> -->
+<!--   <\!-- </div> -\-> -->
+
+<!--   <\!-- <div style="margin-bottom: 16px"> -\-> -->
+<!--   <\!--   <mwc-textfield outlined label="Resource Type" value={ resourceType } on:input={e => { resourceType = e.target.value; } } required></mwc-textfield> -\-> -->
+<!--   <\!-- </div> -\-> -->
+
+<!--   <\!-- <div style="margin-bottom: 16px"> -\-> -->
+<!--   <\!--   <vaadin-date-time-picker label="Date Visited" value={new Date(dateVisited / 1000).toISOString()} on:change={e => { dateVisited = new Date(e.target.value).valueOf() * 1000;} } required></vaadin-date-time-picker> -\-> -->
+<!--   <\!-- </div> -\-> -->
+
+<!--   <div style="display: flex; flex-direction: row"> -->
+<!--     <button -->
+<!--       class="btn btn-error btn-outline" -->
+<!--       outlined -->
+<!--       label="Cancel" -->
+<!--       on:click={() => dispatch('edit-canceled')} -->
+<!--       style="flex: 1; margin-right: 16px" -->
+<!--     >Cancel</button> -->
+<!--     <button -->
+<!--       class="btn btn-success btn-outline" -->
+<!--       raised -->
+<!--       label="Save" -->
+<!--       disabled={!isPatientRecordValid} -->
+<!--       on:click={() => updatePatientRecord()} -->
+<!--       style="flex: 1;" -->
+<!--     >Save</button> -->
+<!--   </div> -->
+<!-- </div> -->

@@ -1,5 +1,6 @@
 use hdk::prelude::*;
 use patient_records_integrity::*;
+
 #[hdk_extern]
 pub fn create_comment(comment: Comment) -> ExternResult<Record> {
     let comment_hash = create_entry(&EntryTypes::Comment(comment.clone()))?;
@@ -17,6 +18,7 @@ pub fn create_comment(comment: Comment) -> ExternResult<Record> {
         )?;
     Ok(record)
 }
+
 #[hdk_extern]
 pub fn get_latest_comment(
     original_comment_hash: ActionHash,
@@ -44,6 +46,7 @@ pub fn get_latest_comment(
     };
     get(latest_comment_hash, GetOptions::default())
 }
+
 #[hdk_extern]
 pub fn get_original_comment(
     original_comment_hash: ActionHash,
@@ -62,6 +65,7 @@ pub fn get_original_comment(
         }
     }
 }
+
 #[hdk_extern]
 pub fn get_all_revisions_for_comment(
     original_comment_hash: ActionHash,
@@ -97,12 +101,14 @@ pub fn get_all_revisions_for_comment(
     records.insert(0, original_record);
     Ok(records)
 }
+
 #[derive(Serialize, Deserialize, Debug)]
 pub struct UpdateCommentInput {
     pub original_comment_hash: ActionHash,
     pub previous_comment_hash: ActionHash,
     pub updated_comment: Comment,
 }
+
 #[hdk_extern]
 pub fn update_comment(input: UpdateCommentInput) -> ExternResult<Record> {
     let updated_comment_hash = update_entry(
@@ -123,6 +129,7 @@ pub fn update_comment(input: UpdateCommentInput) -> ExternResult<Record> {
         )?;
     Ok(record)
 }
+
 #[hdk_extern]
 pub fn delete_comment(original_comment_hash: ActionHash) -> ExternResult<ActionHash> {
     let details = get_details(original_comment_hash.clone(), GetOptions::default())?
@@ -164,6 +171,7 @@ pub fn delete_comment(original_comment_hash: ActionHash) -> ExternResult<ActionH
     }
     delete_entry(original_comment_hash)
 }
+
 #[hdk_extern]
 pub fn get_all_deletes_for_comment(
     original_comment_hash: ActionHash,
@@ -178,6 +186,7 @@ pub fn get_all_deletes_for_comment(
         Details::Record(record_details) => Ok(Some(record_details.deletes)),
     }
 }
+
 #[hdk_extern]
 pub fn get_oldest_delete_for_comment(
     original_comment_hash: ActionHash,
@@ -191,12 +200,14 @@ pub fn get_oldest_delete_for_comment(
         });
     Ok(deletes.first().cloned())
 }
+
 #[hdk_extern]
 pub fn get_comments_for_patient_record(
     patient_record_hash: ActionHash,
 ) -> ExternResult<Vec<Link>> {
     get_links(patient_record_hash, LinkTypes::PatientRecordToComments, None)
 }
+
 #[hdk_extern]
 pub fn get_deleted_comments_for_patient_record(
     patient_record_hash: ActionHash,
