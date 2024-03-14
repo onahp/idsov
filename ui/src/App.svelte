@@ -33,13 +33,14 @@
   // initialized for client
   let client: AppAgentClient | undefined;
   let loading = true; 
+  let store = undefined;
   let profilesStore = undefined;
   let initialized: boolean = false;
   let dna;
   
   export let url = "";
 
-  $: client, loading, profilesStore, initialized, dna;
+  $: client, loading, store, profilesStore, initialized, dna;
 
   // current view context
   let currentView: string | undefined;
@@ -47,11 +48,41 @@
 
   onMount(async () => {
     // We pass an unused string as the url because it will dynamically be replaced in launcher environments
-    client = await AppAgentWebsocket.connect(new URL('https://UNUSED'), 'idsov');
-    profilesStore = new ProfilesStore(new ProfilesClient(client, "idsov"), {
-      avatarMode: "identicon",
+    // client = await AppAgentWebsocket.connect(new URL('https://UNUSED'), 'idsov');
+    // client = await AppAgentWebsocket.connect('idsov', {url: 'https://unused'});
+    client = await AppAgentWebsocket.connect('', 'idsov');
+    profilesStore = new ProfilesStore(new ProfilesClient(client, 'idsov'), {
+      avatarMode: "avatar-required",
+      minNicknameLength: 5,
+      additionalFields: [
+        {
+          name: "maunga",
+          label: "Maunga",
+          required: true,
+        },
+        {
+          name: "moana",
+          label: "Moana",
+          required: true,
+        },
+        {
+          name: "location",
+          label: "Nō Hea Koe",
+          required: true,
+        },
+        {
+          name: "whanau",
+          label: "Whanāu",
+          required: true,
+        },
+        {
+          name: "ingoa",
+          label: "Ingoa",
+          required: true,
+        },
+      ],
     });
-
+    
     // attempt to get DNA hash
     try {
       dna = await client
@@ -93,6 +124,7 @@
 
   console.log(`profilesStore :: ${profilesStore}`)
   console.log(`loading :: ${loading}`);
+  console.log(`store :: ${store}`);
 
 </script>
 
