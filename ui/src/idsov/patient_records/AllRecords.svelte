@@ -54,7 +54,7 @@ onMount(async () => {
       // let pRecord = hashes[i];
       patients?.push(pRecord);
     }
-    console.log(`patient records: ${JSON.stringify(patients)}`);
+    console.log(`[All Records | Patient Records] : ${JSON.stringify(patients, null, 2)}`);
   } catch (e) {
     error = e
   }
@@ -62,12 +62,12 @@ onMount(async () => {
   loading = false;
   
   // dummy fetch data - success
-  const response = await fetch("https://jsonplaceholder.typicode.com/posts");
-  const data = await response.json();
-  console.log(data);
+  // const response = await fetch("https://jsonplaceholder.typicode.com/posts");
+  // const data = await response.json();
+  // console.log(data);
   
   // dummy post data - success
-  doPost(patients);
+  // doPost(patients);
 
 });
 
@@ -107,7 +107,7 @@ async function doPost (data) {
     
   const json = await res.json()
   result = JSON.stringify(json)
-  console.log(`POST Success :: ${result}`);
+  // console.log(`POST Success :: ${result}`);
 }
 
 
@@ -133,6 +133,7 @@ async function doPost (data) {
 <div class="flex flex-col w-full border-opacity-50">
   <div class="grid card bg-base-100 rounded-box">
     <h1 class="text-1xl font-bold text-center">Shared Dashboard</h1>
+    <br>
     {#if loading}
       <div style="display: flex; flex: 1; align-items: center; justify-content: center">
         <progress class="progress w-56"></progress>
@@ -150,11 +151,11 @@ async function doPost (data) {
               <!-- head -->
               <thead>
                 <tr>
-                  <th>
-                    <label>
-                      <input type="checkbox" class="checkbox" />
-                    </label>
-                  </th>
+                  <!-- <th> -->
+                  <!--   <label> -->
+                  <!--     <input type="checkbox" class="checkbox" /> -->
+                  <!--   </label> -->
+                  <!-- </th> -->
                   <th>Name</th>
                   <th>Iwi</th>
                   <th>Resource Type</th>
@@ -167,11 +168,11 @@ async function doPost (data) {
                     <!-- <div style="margin-bottom: 8px;"> -->
                   <!-- row 1 -->
                   <tr >
-                    <th>
-                      <label>
-                        <input type="checkbox" class="checkbox" />
-                      </label>
-                    </th>
+                    <!-- <th> -->
+                    <!--   <label> -->
+                    <!--     <input type="checkbox" class="checkbox" /> -->
+                    <!--   </label> -->
+                    <!-- </th> -->
                     <td >
                       <div class="flex items-center gap-3">
                         <div class="avatar">

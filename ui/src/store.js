@@ -4,7 +4,11 @@ export const view = writable("home");
 export const viewHash = writable(new Uint8Array([]));
 export const notifications = writable([]);
 export const weClientStored = writable(null);
-export const dAppDna = writable("dna");
+export const dAppDna = writable("Getting DNA ...");
+export const dProfilesStore = writable(null);
+export const dProfilesClient = writable(null);
+export const dInitialized = writable(false);
+export const dConnected = writable(false);
 
 export function navigate(location, hash) {
     view.update(v => location);
@@ -22,4 +26,20 @@ export function setWeClient(client) {
 
 export function setDna(dna) {
   dAppDna.update(v => dna);
+}
+
+export function setProfilesStore(profilesStore) {
+  dProfilesStore.update(v => profilesStore);
+}
+
+export function setProfilesClient(profilesClient) {
+  dProfilesClient.update(v => profilesClient);
+}
+
+export function setInitialized(initialized) {
+  dInitialized.update(v => initialized);
+}
+
+export function setConnected(connected) {
+  dConnected.update(v => connected);
 }

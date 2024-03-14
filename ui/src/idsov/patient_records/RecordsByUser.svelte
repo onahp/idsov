@@ -67,11 +67,12 @@ onMount(async () => {
   
   try {
     for (var i = 0; i < hashes.length; i++) {
-      console.log(`call_individual_hash :: ${JSON.stringify(hashes[i])}`);
+      console.log(`[Records By User | call_individual_hash] : ${JSON.stringify(hashes[i])}`);
       let pRecord = await fetchPatientRecord(hashes[i]);
+      pRecord.record_hash = hashes[i];
       patients?.push(pRecord);
     }
-    console.log(`patient records: ${JSON.stringify(patients)}`);
+    console.log(`Records By User | Patient Records] : ${JSON.stringify(patients, null, 2)}`);
   } catch (e) {
     error = e
   }
@@ -131,10 +132,10 @@ async function fetchPatientRecord(hash) {
 <div class="flex flex-col w-full border-opacity-50">
   <div class="grid card bg-base-100 rounded-box">
     <h1 class="text-1xl font-bold text-center">My Dashboard</h1>
-    <h2>List of Active Users</h2>
-    <list-profiles on:agent-selected={e => alert(e.detail.agentPubKey)}></list-profiles>
-    <br>
-    <h2>Records Created By You</h2>
+    <!-- <h2>List of Active Users</h2> -->
+    <!-- <list-profiles on:agent-selected={e => alert(e.detail.agentPubKey)}></list-profiles> -->
+    <!-- <br> -->
+    <!-- <h2>Records Created By You</h2> -->
     <br>
 
     {#if loading}
@@ -206,7 +207,7 @@ async function fetchPatientRecord(hash) {
                     </td>
                     <td>{patient.resource_type}</td>
                     <th>
-                      <button class="btn btn-ghost btn-xs" on:click={() => { editing = true; }}>Details</button>
+                      <button class="btn btn-ghost btn-xs" on:click={() => { patientRecordHash = patient.record_hash; editing = true; }}>Details</button>
                     </th>
                   </tr>
 

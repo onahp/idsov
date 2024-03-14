@@ -8,7 +8,6 @@
   import type { Snackbar } from '@material/mwc-snackbar';
   import '@material/mwc-textarea';
   import '@vaadin/date-time-picker/theme/material/vaadin-date-time-picker.js';
-  import '@material/mwc-textfield';
   
 // specific imports
   import Svelecte from 'svelecte';
@@ -16,6 +15,7 @@
   import moanaList from './data/moanaList';
   import noHeaKoeList from './data/noHeaKoeList';
   import { navigate } from '../../store';
+  import { Link } from 'svelte-routing';
 
   let client: AppAgentClient = (getContext(clientContext) as any).getClient();
 
@@ -45,6 +45,14 @@
 
   onMount(() => {
   });
+
+  function reloadPage() {
+    const thisPage = window.location.pathname;
+    console.log('goto ' + thisPage);
+    goto('/dashboard').then(
+      () => goto(thisPage)
+    );
+  }
 
   async function createPatientRecord() {  
     const patientRecordEntry: PatientRecord = { 
@@ -173,6 +181,7 @@
     <button
       class="btn btn-accent btn-outline"
       label="Create Patient Record"
+      to="/dashboard"
       disabled={!isPatientRecordValid}
       on:click={() => createPatientRecord()}
       style="flex: 1;"
