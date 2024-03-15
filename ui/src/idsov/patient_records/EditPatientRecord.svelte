@@ -1,70 +1,89 @@
 <script lang="ts">
-import { createEventDispatcher, getContext, onMount } from 'svelte';
-import type { AppAgentClient, Record, EntryHash, AgentPubKey, DnaHash, ActionHash } from '@holochain/client';
-import { decode } from '@msgpack/msgpack';
-import { clientContext } from '../../contexts';
-import type { PatientRecord } from './types';
-import '@material/mwc-button';
-import '@material/mwc-snackbar';
-import type { Snackbar } from '@material/mwc-snackbar';
-import '@vaadin/date-time-picker/theme/material/vaadin-date-time-picker.js';
+  import { createEventDispatcher, getContext, onMount } from 'svelte';
+  import type { AppAgentClient, Record, EntryHash, AgentPubKey, DnaHash, ActionHash } from '@holochain/client';
+  import { decode } from '@msgpack/msgpack';
+  import { clientContext } from '../../contexts';
+  import type { PatientRecord } from './types';
+  import '@material/mwc-button';
+  import '@material/mwc-snackbar';
+  import type { Snackbar } from '@material/mwc-snackbar';
+  import '@vaadin/date-time-picker/theme/material/vaadin-date-time-picker.js';
 
-import '@material/mwc-textfield';
-import '@material/mwc-textarea';
-let client: AppAgentClient = (getContext(clientContext) as any).getClient();
+  import '@material/mwc-textfield';
+  import '@material/mwc-textarea';
+  let client: AppAgentClient = (getContext(clientContext) as any).getClient();
 
-const dispatch = createEventDispatcher();
+  const dispatch = createEventDispatcher();
 
-export let originalPatientRecordHash!: ActionHash;
+  export let originalPatientRecordHash!: ActionHash;
 
-export let currentRecord!: Record;
-let currentPatientRecord: PatientRecord = decode((currentRecord.entry as any).Present.entry) as PatientRecord;
+  export let currentRecord!: Record;
+  let currentPatientRecord: PatientRecord = decode((currentRecord.entry as any).Present.entry) as PatientRecord;
 
-let content: string | undefined = currentPatientRecord.content;
-let resourceType: string | undefined = currentPatientRecord.resource_type;
-let dateVisited: number | undefined = currentPatientRecord.date_visited;
+  let content: string | undefined = currentPatientRecord.content;
+  let resourceType: string | undefined = currentPatientRecord.resource_type;
+  let dateVisited: number | undefined = currentPatientRecord.date_visited;
+  let whanau: string | undefined = currentPatientRecord.whanau;
+  let ingoa: string | undefined = currentPatientRecord.ingoa;
+  let noHeaKoe: string | undefined = currentPatientRecord.no_hea_koe;
+  let maunga: string | undefined = currentPatientRecord.maunga;
+  let moana: string | undefined = currentPatientRecord.moana;
 
-let errorSnackbar: Snackbar;
+  let errorSnackbar: Snackbar;
 
-$: content, resourceType, dateVisited;
-$: isPatientRecordValid = true && content !== '' && resourceType !== '' && true;
+  $: content, resourceType, dateVisited, whanau, ingoa, noHeaKoe, maunga, moana;
+  // $: isPatientRecordValid = true && content !== '' && resourceType !== '' && true;
+  $: isPatientRecordValid = true && 
+  content !== '' && 
+  resourceType !== '' && 
+  whanau !== '' && 
+  ingoa !== '' &&
+  noHeaKoe !== '' && 
+  maunga !== '' &&
+  moana !== '' &&
+  true;
 
-onMount(() => {
-  if (currentRecord === undefined) {
-    throw new Error(`The currentRecord input is required for the EditPatientRecord element`);
+  onMount(() => {
+    if (currentRecord === undefined) {
+      throw new Error(`The currentRecord input is required for the EditPatientRecord element`);
+    }
+    if (originalPatientRecordHash === undefined) {
+      throw new Error(`The originalPatientRecordHash input is required for the EditPatientRecord element`);
+    }
+  });
+
+  async function updatePatientRecord() {
+
+    const patientRecord: PatientRecord = {
+      content: content!,
+      resource_type: resourceType!,
+      date_visited: dateVisited!,
+      whanau: whanau!,
+      ingoa: ingoa!,
+      no_hea_koe: noHeaKoe!,
+      maunga: maunga!,
+      moana: moana!,
+    };
+
+    try {
+      const updateRecord: Record = await client.callZome({
+        cap_secret: null,
+        role_name: 'idsov',
+        zome_name: 'patient_records',
+        fn_name: 'update_patient_record',
+        payload: {
+          original_patient_record_hash: originalPatientRecordHash,
+          previous_patient_record_hash: currentRecord.signed_action.hashed.hash,
+          updated_patient_record: patientRecord
+        }
+      });
+
+      dispatch('patient-record-updated', { actionHash: updateRecord.signed_action.hashed.hash });
+    } catch (e) {
+      errorSnackbar.labelText = `Error updating the patient record: ${e.data.data}`;
+      errorSnackbar.show();
+    }
   }
-  if (originalPatientRecordHash === undefined) {
-    throw new Error(`The originalPatientRecordHash input is required for the EditPatientRecord element`);
-  }
-});
-
-async function updatePatientRecord() {
-
-  const patientRecord: PatientRecord = {
-    content: content!,
-    resource_type: resourceType!,
-    date_visited: dateVisited!,
-  };
-
-  try {
-    const updateRecord: Record = await client.callZome({
-      cap_secret: null,
-      role_name: 'idsov',
-      zome_name: 'patient_records',
-      fn_name: 'update_patient_record',
-      payload: {
-        original_patient_record_hash: originalPatientRecordHash,
-        previous_patient_record_hash: currentRecord.signed_action.hashed.hash,
-        updated_patient_record: patientRecord
-      }
-    });
-
-    dispatch('patient-record-updated', { actionHash: updateRecord.signed_action.hashed.hash });
-  } catch (e) {
-    errorSnackbar.labelText = `Error updating the patient record: ${e.data.data}`;
-    errorSnackbar.show();
-  }
-}
 
 </script>
 
@@ -110,39 +129,39 @@ async function updatePatientRecord() {
 </div>
 
 <!-- <div style="display: flex; flex-direction: column"> -->
-<!--   <\!-- <span style="font-size: 18px">Modify Patient Record</span> -\-> -->
-<!--   <mwc-textarea outlined label="Content" value={ content } on:input={e => { content = e.target.value;} } required></mwc-textarea> -->
-<!--   <br> -->
-<!--   <mwc-textfield outlined label="Resource Type" value={ resourceType } on:input={e => { resourceType = e.target.value; } } required></mwc-textfield> -->
-<!--   <br> -->
-<!--   <vaadin-date-time-picker label="Date Visited" value={new Date(dateVisited / 1000).toISOString()} on:change={e => { dateVisited = new Date(e.target.value).valueOf() * 1000;} } required></vaadin-date-time-picker> -->
-<!--   <\!-- <div style="margin-bottom: 16px"> -\-> -->
-<!--   <\!--   <mwc-textarea outlined label="Content" value={ content } on:input={e => { content = e.target.value;} } required></mwc-textarea> -\-> -->
+  <!--   <\!-- <span style="font-size: 18px">Modify Patient Record</span> -\-> -->
+    <!--   <mwc-textarea outlined label="Content" value={ content } on:input={e => { content = e.target.value;} } required></mwc-textarea> -->
+    <!--   <br> -->
+    <!--   <mwc-textfield outlined label="Resource Type" value={ resourceType } on:input={e => { resourceType = e.target.value; } } required></mwc-textfield> -->
+    <!--   <br> -->
+    <!--   <vaadin-date-time-picker label="Date Visited" value={new Date(dateVisited / 1000).toISOString()} on:change={e => { dateVisited = new Date(e.target.value).valueOf() * 1000;} } required></vaadin-date-time-picker> -->
+    <!--   <\!-- <div style="margin-bottom: 16px"> -\-> -->
+      <!--   <\!--   <mwc-textarea outlined label="Content" value={ content } on:input={e => { content = e.target.value;} } required></mwc-textarea> -\-> -->
 <!--   <\!-- </div> -\-> -->
 
-<!--   <\!-- <div style="margin-bottom: 16px"> -\-> -->
-<!--   <\!--   <mwc-textfield outlined label="Resource Type" value={ resourceType } on:input={e => { resourceType = e.target.value; } } required></mwc-textfield> -\-> -->
+  <!--   <\!-- <div style="margin-bottom: 16px"> -\-> -->
+    <!--   <\!--   <mwc-textfield outlined label="Resource Type" value={ resourceType } on:input={e => { resourceType = e.target.value; } } required></mwc-textfield> -\-> -->
 <!--   <\!-- </div> -\-> -->
 
-<!--   <\!-- <div style="margin-bottom: 16px"> -\-> -->
-<!--   <\!--   <vaadin-date-time-picker label="Date Visited" value={new Date(dateVisited / 1000).toISOString()} on:change={e => { dateVisited = new Date(e.target.value).valueOf() * 1000;} } required></vaadin-date-time-picker> -\-> -->
+  <!--   <\!-- <div style="margin-bottom: 16px"> -\-> -->
+    <!--   <\!--   <vaadin-date-time-picker label="Date Visited" value={new Date(dateVisited / 1000).toISOString()} on:change={e => { dateVisited = new Date(e.target.value).valueOf() * 1000;} } required></vaadin-date-time-picker> -\-> -->
 <!--   <\!-- </div> -\-> -->
 
-<!--   <div style="display: flex; flex-direction: row"> -->
-<!--     <button -->
-<!--       class="btn btn-error btn-outline" -->
-<!--       outlined -->
-<!--       label="Cancel" -->
-<!--       on:click={() => dispatch('edit-canceled')} -->
-<!--       style="flex: 1; margin-right: 16px" -->
-<!--     >Cancel</button> -->
-<!--     <button -->
-<!--       class="btn btn-success btn-outline" -->
-<!--       raised -->
-<!--       label="Save" -->
-<!--       disabled={!isPatientRecordValid} -->
-<!--       on:click={() => updatePatientRecord()} -->
-<!--       style="flex: 1;" -->
-<!--     >Save</button> -->
-<!--   </div> -->
-<!-- </div> -->
+  <!--   <div style="display: flex; flex-direction: row"> -->
+    <!--     <button -->
+    <!--       class="btn btn-error btn-outline" -->
+    <!--       outlined -->
+    <!--       label="Cancel" -->
+    <!--       on:click={() => dispatch('edit-canceled')} -->
+      <!--       style="flex: 1; margin-right: 16px" -->
+      <!--     >Cancel</button> -->
+    <!--     <button -->
+    <!--       class="btn btn-success btn-outline" -->
+    <!--       raised -->
+    <!--       label="Save" -->
+    <!--       disabled={!isPatientRecordValid} -->
+    <!--       on:click={() => updatePatientRecord()} -->
+      <!--       style="flex: 1;" -->
+      <!--     >Save</button> -->
+    <!--   </div> -->
+  <!-- </div> -->
