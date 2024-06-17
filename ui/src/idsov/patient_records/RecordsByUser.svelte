@@ -22,7 +22,7 @@ export let patientRecordHash: ActionHash;
 let client: AppAgentClient = (getContext(clientContext) as any).getClient();
 
 // let patients: Array<PatientRecord> | undefined;
-let patients = [];
+let patients = [] | undefined;
 let hashes: Array<ActionHash> | undefined;
 let loading = true;
 let error: any = undefined;

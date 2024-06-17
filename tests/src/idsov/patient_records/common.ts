@@ -1,14 +1,27 @@
-import { CallableCell } from '@holochain/tryorama';
-import { NewEntryAction, ActionHash, Record, AppBundleSource, fakeActionHash, fakeAgentPubKey, fakeEntryHash, fakeDnaHash } from '@holochain/client';
-
+import { CallableCell } from "@holochain/tryorama";
+import {
+  NewEntryAction,
+  ActionHash,
+  Record,
+  AppBundleSource,
+  fakeActionHash,
+  fakeAgentPubKey,
+  fakeEntryHash,
+  fakeDnaHash,
+} from "@holochain/client";
 
 
 export async function samplePatientRecord(cell: CallableCell, partialPatientRecord = {}) {
     return {
         ...{
-	  content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-	  resource_type: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+	  content: "This is a patient record created by Ioane Mataki",
+	  resource_type: "The resource type is a visitation",
 	  date_visited: 1674053334548000,
+	  whanau: "Mataki",
+	  ingoa: "Ioane",
+	  no_hea_koe: "Region Area",
+	  maunga: "Mountain Place",
+	  moana: "Body of Water",
         },
         ...partialPatientRecord
     };
@@ -22,12 +35,10 @@ export async function createPatientRecord(cell: CallableCell, patientRecord = un
     });
 }
 
-
-
 export async function sampleComment(cell: CallableCell, partialComment = {}) {
     return {
         ...{
-	  content_comment: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+	  content_comment: "This is some random comment for the patient record",
           patient_record_hash: (await createPatientRecord(cell)).signed_action.hashed.hash,
         },
         ...partialComment
@@ -41,4 +52,3 @@ export async function createComment(cell: CallableCell, comment = undefined): Pr
       payload: comment || await sampleComment(cell),
     });
 }
-

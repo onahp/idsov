@@ -107,7 +107,7 @@ async function deleteComment() {
 
   <div style="display: flex; flex-direction: row; margin-bottom: 16px">
     <span style="margin-right: 4px"><strong>Content Comment:</strong></span>
-    <span style="white-space: pre-line">{ comment.content_comment }</span>
+    <span style="white-space: pre-line">{ comment?.content_comment }</span>
   </div>
 
 </div>

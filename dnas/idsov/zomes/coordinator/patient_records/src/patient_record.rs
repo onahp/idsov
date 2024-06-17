@@ -13,7 +13,7 @@ pub struct RemoveRecordForRecorderInput {
     pub target_record_hash: ActionHash,
 }
 
-#[hdk_extern]
+#[hdk_extern(visibility = "private")]
 pub fn create_patient_record(patient_record: PatientRecord) -> ExternResult<Record> {
     debug!("create patient record: {:?}", patient_record);
     let patient_record_hash = create_entry(
